@@ -618,6 +618,10 @@
 
 - (void)onSelectMessage:(TUIMessageCell *)cell
 {
+    if ([self.delegate respondsToSelector:@selector(messageController:onSelectMessageContent:)]) {
+        [self.delegate messageController:self onSelectMessageContent:cell];
+        return;
+    }
     if([cell isKindOfClass:[TUIVoiceMessageCell class]]){
         [self playVoiceMessage:(TUIVoiceMessageCell *)cell];
     }
@@ -630,9 +634,7 @@
     if ([cell isKindOfClass:[TUIFileMessageCell class]]) {
         [self showFileMessage:(TUIFileMessageCell *)cell];
     }
-    if ([self.delegate respondsToSelector:@selector(messageController:onSelectMessageContent:)]) {
-        [self.delegate messageController:self onSelectMessageContent:cell];
-    }
+   
 }
 
 - (void)onLongPressMessage:(TUIMessageCell *)cell
